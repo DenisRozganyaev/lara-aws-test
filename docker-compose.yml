@@ -1,0 +1,42 @@
+version: '3'
+services:
+    laravel-app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: laravel-app
+        ports:
+            - "80:80"  # Мапуємо порт контейнера 9000 на порт хоста 8080
+        volumes:
+            - .:/var/www/html  # Мапуємо код проекту на контейнер
+        environment:
+            - APP_ENV=local
+            - DB_CONNECTION=mysql
+            - DB_HOST=mysql
+            - DB_PORT=3306
+            - DB_DATABASE=laravel
+            - DB_USERNAME=root
+            - DB_PASSWORD=secret
+        depends_on:
+            - mysql
+        networks:
+            - laravel-network
+
+    mysql:
+        image: mysql:8
+        container_name: mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: secret
+        ports:
+            - "33061:3306"
+        volumes:
+            - "db_volume:/var/lib/mysql"
+        networks:
+            - laravel-network
+
+networks:
+    laravel-network:
+
+volumes:
+    db_volume:
+        driver: local
