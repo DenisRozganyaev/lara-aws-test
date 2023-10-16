@@ -28,4 +28,4 @@ jobs:
 
       - name: Update ECS service
         run: |
-          aws ecs update-service --cluster your-ecs-cluster --service your-ecs-service --force-new-deployment
+          aws ecs update-service --cluster lara-aws --service lara-aws-service --force-new-deployment
