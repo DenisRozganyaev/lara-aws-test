@@ -23,13 +23,13 @@ jobs:
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
-        
+
       - name: Build and push Docker image
         run: |
-          docker build -t lara-aws:latest .
-          docker tag lara-aws:latest ${{ secrets.AWS_REGISTRY_URL }}/lara-aws:latest
-          docker push ${{ secrets.AWS_REGISTRY_URL }}/lara-aws:latest
+          docker build -t lesson-aws:latest .
+          docker tag lesson-aws:latest ${{ secrets.AWS_REGISTRY_URL }}/lesson-aws:latest
+          docker push ${{ secrets.AWS_REGISTRY_URL }}/lesson-aws:latest
 
       - name: Update ECS service
         run: |
-          aws ecs update-service --cluster lara-aws --service lara-aws-service --force-new-deployment
+          aws ecs update-service --cluster lesson-aws --service lesson-aws-service --force-new-deployment
